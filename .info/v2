@@ -35,26 +35,44 @@ separator|sep = <string>
 
 -------------------------------------------------------------
 [OTHER]
-/* 's' variable actions
-s == <string>
-s.contains(<string>)
-s.contains(<char>)
-s.match(<string>)
-s.has_match(<string>)
-s[<size_t>] == <char>
+event var ->
+    trigger - chars that have trigger the call
+    ignored - chars between the trigger and the end of the last call
+    before  - chars before the trigger
+    after   - chars after the trigger
+
+/* 'event' variable's <special_methods>
+var.find(<string>)
+var.find(<char>)
+var.rfind(<string>)
+var.rfind(<char>)
+*/
+
+/* 'event' variable's <methods>
+var == <string>
+var.starts_with(<string>)
+var.ends_with(<string>)
+var.contains(<string>)
+var.contains(<char>)
+var.match(<string>)
+var.has_match(<string>)
+var[<integer>|<special_methods>] == <char>
+var.isEnd([<integer>|<special_methods>)
+var.empty()
 */
 
 -------------------------------------------------------------
 [RESERVED]
 file|type|extension|ext -> variables name reserved for the header configuration
 entry -> variable name reserved for the entry point in parsing
-s -> variable name reserved for the one passed in the code sub-sections
+event -> variable name reserved for the one passed in the code sub-sections
 i -> variable name reserved for the one used by loop in the code sub-sections
 
 -------------------------------------------------------------
 [SYNTAX]
 <empty> =
 <size_t> = (1-9)(0-9)*
+<integer> = [-](1-9)(0-9)*
 <char> = *
 <string> = "<char>"
 <regex> = <string>
@@ -68,8 +86,8 @@ i -> variable name reserved for the one used by loop in the code sub-sections
 <var_type> = (array|a)|(value|v)|(none|<empty>)|<var_now>
 
 <logical_operators> = (&&)|(||)
-<s_methods> = see [OTHER] for the 's' methods definition
-<condition> = <boolean>|<s_methods> (<logical_operators> <boolean>|<s_methods>)*
+<methods> = see [OTHER] for the 'event' methods definition
+<condition> = <boolean>|<methods> (<logical_operators> <boolean>|<methods>)*
 <loop> = for (<condition>) {<instructions>}
 <branch> = if (<condition>) {<instructions>}
 <instruction> = <branch>|<loop>|(ret <boolean>)
@@ -85,5 +103,5 @@ Any '= <string>' can be replaced by ':= <regex>'
 The 'separator|sep' definition is only avaible on the 'array' typed variables
 A 'code' sub-section that dosen't end on a 'ret <boolean>' is by default treating has false
 Any variables defined in a 'code' sub-section is local and can't be used anywhere else
-The 's' variable is a <string>
+The 'event' variable is a struct of <string>
 The 'i' variable is an <size_t>
