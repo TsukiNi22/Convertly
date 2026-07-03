@@ -1,0 +1,89 @@
+[HEADER]
+file = <file>
+type = <file_type>
+extension|ext = <string>
+
+[VARIABLES]
+var := <regex>
+var ->
+    start = <string>
+    start = <boolean>
+    end = <string>
+    end = <boolean>
+    contains = <string>
+
+var <-
+var.start = <string>
+var.start = <boolean>
+var.end = <string>
+var.end = <boolean>
+var.contains = <string>
+
+[PARSING]
+@var:<var_type>@
+@def
+using = <var_prev:VARIABLES>
+start_with = <var_now>|entry
+start_after = <var_now>|entry
+separator|sep = <string>
+
+@code:start
+<instructions>
+
+@code:end
+<instructions>
+
+-------------------------------------------------------------
+[OTHER]
+/* 's' variable actions
+s == <string>
+s.contains(<string>)
+s.contains(<char>)
+s.match(<string>)
+s.has_match(<string>)
+s[<size_t>] == <char>
+*/
+
+-------------------------------------------------------------
+[RESERVED]
+file|type|extension|ext -> variables name reserved for the header configuration
+entry -> variable name reserved for the entry point in parsing
+s -> variable name reserved for the one passed in the code sub-sections
+i -> variable name reserved for the one used by loop in the code sub-sections
+
+-------------------------------------------------------------
+[SYNTAX]
+<empty> =
+<size_t> = (1-9)(0-9)*
+<char> = *
+<string> = "<char>"
+<regex> = <string>
+<boolean> = (true|t|1)|(false|f|0)
+<file> = (binary|b|0)|(textual|t|1)|(language|l|2)
+<file_type> = (input|stdin|1)|(output|stdout|0)
+<var_now> = variables in the same section
+<var_prev> = variables in previous section
+<var_prev:SECTION> = variables in the given SECTION
+<var> = <var_now>|<var_prev>
+<var_type> = (array|a)|(value|v)|(none|<empty>)|<var_now>
+
+<logical_operators> = (&&)|(||)
+<s_methods> = see [OTHER] for the 's' methods definition
+<condition> = <boolean>|<s_methods> (<logical_operators> <boolean>|<s_methods>)*
+<loop> = for (<condition>) {<instructions>}
+<branch> = if (<condition>) {<instructions>}
+<instruction> = <branch>|<loop>|(ret <boolean>)
+<instructions> = <instruction>*
+
+-------------------------------------------------------------
+[RULES]
+Section order: HEADER -> VARIABLES -> PARSING
+Value can be used from variables on the same section or previous ones using: var2 = var1 | var2 = var1.sub | var1.sub2 = var1.sub1
+The space ' ' before & after '='/':=' or '->'/'<-' are optional
+The '=' (immediate) is used for <string> & the ':=' (lazy) is used for <regex>
+Any '= <string>' can be replaced by ':= <regex>'
+The 'separator|sep' definition is only avaible on the 'array' typed variables
+A 'code' sub-section that dosen't end on a 'ret <boolean>' is by default treating has false
+Any variables defined in a 'code' sub-section is local and can't be used anywhere else
+The 's' variable is a <string>
+The 'i' variable is an <size_t>
