@@ -1,0 +1,50 @@
+parser + interpreter (so) ->
+    src-rust/
+        core (call rust & c 'tools' with input)
+        argument-handler
+        file-stream-handler
+        ats-builder
+        ats-checker
+        ats-exec
+        output (stdout or return)
+        c-so-loader
+        c-binding
+    src-c/
+        tokenizer
+        pc-writer (build pc file from checked tokens/ats-builded)
+        pc-reader
+        regex
+
+api (bin) -> full cpp ? (I have already a lib for cli, need to finish network module)
+
+server-archi ->
+    update.log -> contains different log update
+
+    logs/
+        dd-mm-yyyy.log -> execution logs (one file by day using UTC+0)
+        ...
+
+    configs/
+        input/
+            <name>.icf
+            <name>.pc-icf
+            ...
+        visual/
+            <name>.vcf
+            <name>.pc-vcf
+            ...
+        output/
+            <name>.ocf
+            <name>.pc-ocf
+            ...
+
+    convertly/
+        version-used -> contains the name of the version used
+        convertly-x.x.x.so -> different version of the convertly
+        x.x.x/ -> contains c shared object used by 'convertly-x.x.x.so'
+            tokenizer-x.x.x.so -> tokenizer handler
+            pc-handler-x.x.x.so -> pc writer & reader
+            regex-x.x.x.so -> regex handler
+        ...
+
+    api-binary -> start the server and load shared object (can be reload/changed using admin-cli)

@@ -1,0 +1,17 @@
+- language
+ - explication of syntaxe definition
+ - tokens
+  - literals
+  - identifiers
+  - comments
+  - delimitor
+  - key word
+  - comparator
+  - operator
+  - flow controler
+  - type
+ - files content syntaxe
+  - icf
+  - ocf
+  - vcf
+ - globals rules -> directly into tokens

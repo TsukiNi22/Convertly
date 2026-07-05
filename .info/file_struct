@@ -1,0 +1,21 @@
+<ext> = ifpc|ofpc|vfpc
+<ext> -> pc-<ext>
+
+pre-compiled files:
+<origin_file_hash> (SHA-1)
+<pre-compiled_data>
+
+./configuration ->
+    ./input ->
+        *.ifpc
+
+    ./visual ->
+        *.ofpc
+
+    ./ouput ->
+        *.vfpc
+
+    ./pre-compiled (temporary files) ->
+        *.pc-ifpc
+        *.pc-ofpc
+        *.pc-vfpc

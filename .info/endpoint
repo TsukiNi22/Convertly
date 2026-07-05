@@ -1,0 +1,27 @@
+OPTIONS /help -> display endpoint
+
+GET /token -> return a session token
+
+GET  /status/job/{job_id} -> show the status of job
+
+POST /convert -> convert a given file with the given configurations (wait until awnser)
+POST /convert/async -> convert a given file with the given configurations (async job)
+GET  /convert/job/{job_id} -> wait until the awnser
+
+GET /configs -> list all configuration for a given extension
+GET /extension -> list all supported extension
+
+GET /log -> show update log
+GET /version -> all version of the: parser, interpreter, api
+GET /version/parser -> actual version of the parser
+GET /version/interpreter -> actual version of the interpreter
+GET /version/api -> actual version of the api
+
+GET /admin -> tell if the user is an admin (only unlock some visual for client side)
+
+/* admin */
+PUT    /configs/pc -> reload all pre-compiled files
+DELETE /configs/pc -> remove all pre-compiled files
+PUT    /configs -> add a new configuration
+DELETE /configs -> remove an existing configuration
+GET    /configs -> list all configurations files with extension they handle
